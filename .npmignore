@@ -1,0 +1,6 @@
+build
+examples
+package-lock.json
+.babelrc
+.prettierrc
+.prettierignore
