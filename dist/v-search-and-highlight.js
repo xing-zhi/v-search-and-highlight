@@ -1,11 +1,8 @@
-(function(global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined'
-    ? (module.exports = factory())
-    : typeof define === 'function' && define.amd
-      ? define(factory)
-      : (global.VSearchAndHighlight = factory());
-})(this, function() {
-  'use strict';
+(function (global, factory) {
+  typeof exports === 'object' && typeof module !== 'undefined' ? module.exports = factory() :
+  typeof define === 'function' && define.amd ? define(factory) :
+  (global.VSearchAndHighlight = factory());
+}(this, (function () { 'use strict';
 
   // https://esdiscuss.org/topic/regexp-escape#content-7
   function escapeRegExp(str) {
@@ -16,16 +13,13 @@
     var escapedKeyword = escapeRegExp(keyword);
     var re = new RegExp(escapedKeyword, 'gi');
 
-    return text.replace(
-      re,
-      '<mark class="' + className + '">' + keyword + '</mark>'
-    );
+    return text.replace(re, '<mark class="' + className + '">' + keyword + '</mark>');
   }
 
   function searchAndHighlight(el, binding) {
     var _binding$value = binding.value,
-      keyword = _binding$value.keyword,
-      filter = _binding$value.filter;
+        keyword = _binding$value.keyword,
+        filter = _binding$value.filter;
     // Before search and highlight, the mark elements added before should be cleared.
     // In order to avoid remove the mark elements not added by this function, add a class to mark the element we added
     // The class name 'sah' is abbr of 'search and highlight'
@@ -33,7 +27,7 @@
     var flagClassName = 'sah';
 
     // Clear the mark element added before
-    [].forEach.call(el.querySelectorAll('mark.' + flagClassName), function(el) {
+    [].forEach.call(el.querySelectorAll('mark.' + flagClassName), function (el) {
       el.parentNode.replaceChild(el.firstChild, el);
     });
 
@@ -96,4 +90,5 @@
   };
 
   return SearchAndHighlight;
-});
+
+})));
