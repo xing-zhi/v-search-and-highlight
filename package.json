@@ -1,0 +1,46 @@
+{
+  "name": "v-search-and-highlight",
+  "version": "1.0.0",
+  "description": "A Vue plugin for searching the content of an element and highlighting the keyword with the mark element.",
+  "main": "dist/index.common.js",
+  "module": "dist/index.esm.js",
+  "scripts": {
+    "build": "node ./build/index.js",
+    "precommit": "lint-staged"
+  },
+  "lint-staged": {
+    "*.js": [
+      "prettier --write",
+      "git add"
+    ]
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/xing-zhi/v-search-and-highlight.git"
+  },
+  "keywords": [
+    "vue",
+    "plugin",
+    "directive",
+    "search",
+    "highlight",
+    "mark"
+  ],
+  "author": "https://ranwu.me",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/xing-zhi/v-search-and-highlight/issues"
+  },
+  "homepage": "https://github.com/xing-zhi/v-search-and-highlight#readme",
+  "devDependencies": {
+    "del": "^3.0.0",
+    "husky": "^0.14.3",
+    "lint-staged": "^7.0.0",
+    "prettier": "^1.11.1",
+    "rollup": "^0.57.1",
+    "rollup-plugin-uglify": "^3.0.0"
+  },
+  "peerDependencies": {
+    "vue": "^2.0.0"
+  }
+}
