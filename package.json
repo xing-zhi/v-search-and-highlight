@@ -33,11 +33,15 @@
   },
   "homepage": "https://github.com/xing-zhi/v-search-and-highlight#readme",
   "devDependencies": {
+    "babel-core": "^6.26.0",
+    "babel-plugin-external-helpers": "^6.22.0",
+    "babel-preset-es2015": "^6.24.1",
     "del": "^3.0.0",
     "husky": "^0.14.3",
     "lint-staged": "^7.0.0",
     "prettier": "^1.11.1",
     "rollup": "^0.57.1",
+    "rollup-plugin-babel": "^3.0.3",
     "rollup-plugin-uglify": "^3.0.0"
   },
   "peerDependencies": {

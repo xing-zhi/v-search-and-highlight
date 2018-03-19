@@ -2,6 +2,7 @@ const path = require('path');
 
 const del = require('del');
 const rollup = require('rollup');
+const babel = require('rollup-plugin-babel');
 const uglify = require('rollup-plugin-uglify');
 
 const pathResolve = (...p) => path.resolve(__dirname, ...p);
@@ -27,7 +28,8 @@ const builds = {
   },
   umd: {
     inputOptions: {
-      input: pathResolve('../src/index.js')
+      input: pathResolve('../src/index.js'),
+      plugins: [babel()]
     },
     outputOptions: {
       file: pathResolve('../dist/v-search-and-highlight.js'),
@@ -38,7 +40,7 @@ const builds = {
   'umd.min': {
     inputOptions: {
       input: pathResolve('../src/index.js'),
-      plugins: [uglify()]
+      plugins: [babel(), uglify()]
     },
     outputOptions: {
       file: pathResolve('../dist/v-search-and-highlight.min.js'),
