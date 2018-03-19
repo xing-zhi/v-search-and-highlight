@@ -4,6 +4,7 @@
   "description": "A Vue plugin for searching the content of an element and highlighting the keyword with the mark element.",
   "main": "dist/index.common.js",
   "module": "dist/index.esm.js",
+  "jsdelivr": "dist/v-search-and-highlight.js",
   "scripts": {
     "build": "node ./build/index.js",
     "precommit": "lint-staged"
