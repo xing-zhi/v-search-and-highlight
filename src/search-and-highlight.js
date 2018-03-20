@@ -6,16 +6,15 @@ export default function searchAndHighlight(rootNode, binding) {
   // In order to avoid remove the mark elements not added by this function, add a class to mark the element we added
   // The class name 'sah' is abbr of 'search and highlight'
   const flagClassName = 'sah';
-  const textNodeType = 3;
 
   // Clear the mark element added before
   [].forEach.call(rootNode.querySelectorAll(`mark.${flagClassName}`), el => {
     el.parentNode.replaceChild(el.firstChild, el);
   });
 
-  // Seach and highlight resursively
-  /* eslint-disable-next-line no-shadow */
-  function highlight(keyword, el) {
+  // Walk the DOM tree
+  function walk(el) {
+    const textNodeType = 3;
     if (!el) {
       return;
     }
@@ -24,10 +23,10 @@ export default function searchAndHighlight(rootNode, binding) {
       [].forEach.call(el.childNodes, currentNode => {
         if (typeof filter === 'function') {
           if (filter(currentNode)) {
-            highlight(keyword, currentNode);
+            walk(currentNode);
           }
         } else {
-          highlight(keyword, currentNode);
+          walk(currentNode);
         }
       });
     }
@@ -57,5 +56,5 @@ export default function searchAndHighlight(rootNode, binding) {
     }
   }
 
-  highlight(keyword, rootNode);
+  walk(rootNode);
 }
