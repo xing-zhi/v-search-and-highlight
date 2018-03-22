@@ -28,7 +28,7 @@ The directive requires the `keyword` argument and surpports an optional filter f
 |Name|Required|Type|Description|
 |:---- | :--- | :--- | :---- |
 |keyword|true|String|The keyword to search|
-|filter|false|Function|The filter function to filter out elements|
+|filter|false|Function/String|If it is a function, it's the function to filter the elements, take the DOM node as parameter and return `true` for handling the element; If it is a string, it's the class name of for elements to filter out.|
 
 # Caveats
 For data binding, we have to use `v-text` directive other than the mustache syntax.

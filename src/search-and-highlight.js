@@ -1,5 +1,10 @@
 import highlightText from './highlight-text';
 
+const isFunction = fn => typeof fn === 'function';
+const isString = str => typeof str === 'string';
+const hasClass = (el, klass) =>
+  el.className && el.className.split(' ').includes(klass);
+
 export default function searchAndHighlight(rootNode, binding) {
   const { keyword, filter } = binding.value;
   // Before search and highlight, the mark elements added before should be cleared.
@@ -21,13 +26,14 @@ export default function searchAndHighlight(rootNode, binding) {
 
     if (el.hasChildNodes()) {
       [].forEach.call(el.childNodes, currentNode => {
-        if (typeof filter === 'function') {
-          if (filter(currentNode)) {
-            walk(currentNode);
-          }
-        } else {
-          walk(currentNode);
+        if (isFunction(filter) && !filter(currentNode)) {
+          return;
         }
+        if (isString(filter) && hasClass(currentNode, filter)) {
+          return;
+        }
+
+        walk(currentNode);
       });
     }
 
