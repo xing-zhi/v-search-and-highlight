@@ -6,7 +6,7 @@
 
   // https://esdiscuss.org/topic/regexp-escape#content-7
   function escapeRegExp(str) {
-    return str.replace(/[\-\[\]\/\{\}\(\)\*\+\?\.\\\^\$\|]/g, '\\$&');
+    return str.replace(/[-[\]/{}()*+?.\\^$|]/g, '\\$&');
   }
 
   function highlightText(text, keyword, className) {
@@ -16,7 +16,17 @@
     return text.replace(re, '<mark class="' + className + '">' + keyword + '</mark>');
   }
 
-  function searchAndHighlight(el, binding) {
+  var isFunction = function isFunction(fn) {
+    return typeof fn === 'function';
+  };
+  var isString = function isString(str) {
+    return typeof str === 'string';
+  };
+  var hasClass = function hasClass(el, klass) {
+    return el.className && el.className.split(' ').includes(klass);
+  };
+
+  function searchAndHighlight(rootNode, binding) {
     var _binding$value = binding.value,
         keyword = _binding$value.keyword,
         filter = _binding$value.filter;
@@ -27,30 +37,31 @@
     var flagClassName = 'sah';
 
     // Clear the mark element added before
-    [].forEach.call(el.querySelectorAll('mark.' + flagClassName), function (el) {
+    [].forEach.call(rootNode.querySelectorAll('mark.' + flagClassName), function (el) {
       el.parentNode.replaceChild(el.firstChild, el);
     });
 
-    // Seach and highlight resursively
-    function highlight(keyword, el) {
+    // Walk the DOM tree
+    function walk(el) {
+      var textNodeType = 3;
       if (!el) {
         return;
       }
 
       if (el.hasChildNodes()) {
-        for (var i = el.childNodes.length - 1; i > -1; i--) {
-          var currentNode = el.childNodes[i];
-          if (typeof filter === 'function') {
-            if (filter(currentNode)) {
-              highlight(keyword, currentNode);
-            }
-          } else {
-            highlight(keyword, currentNode);
+        [].forEach.call(el.childNodes, function (currentNode) {
+          if (isFunction(filter) && !filter(currentNode)) {
+            return;
           }
-        }
+          if (isString(filter) && hasClass(currentNode, filter)) {
+            return;
+          }
+
+          walk(currentNode);
+        });
       }
 
-      if (el.nodeType === 3) {
+      if (el.nodeType === textNodeType) {
         // For browsers support vue, the textContent property is all we need
         var nodeText = el.textContent || '';
 
@@ -64,9 +75,12 @@
         tmpDiv.innerHTML = highlightedText;
 
         var parentNode = el.parentNode;
-        var childNodes = tmpDiv.childNodes;
+        var _tmpDiv = tmpDiv,
+            childNodes = _tmpDiv.childNodes;
+
 
         while (childNodes.length) {
+          /* eslint-disable-next-line no-magic-numbers */
           parentNode.insertBefore(childNodes[0], el);
         }
         parentNode.removeChild(el);
@@ -74,7 +88,7 @@
       }
     }
 
-    highlight(keyword, el);
+    walk(rootNode);
   }
 
   var searchAndHighlightDirective = {
@@ -84,7 +98,7 @@
 
   // the plugin includes a directive named v-search-and-highlight
   var SearchAndHighlight = {
-    install: function install(Vue, options) {
+    install: function install(Vue) {
       Vue.directive('search-and-highlight', searchAndHighlightDirective);
     }
   };
