@@ -1,0 +1,12 @@
+env:
+  global:
+  - GH_REF: github.com/xing-zhi/v-search-and-highlight.git
+  - secure: F1Vcb63uywCWpxN1xYl3Dz/M6FepB7B2Lfo7vssUmpScOBEoaizmWfqpLAnT2E6xsAMwfaE6Wzo5gECqg5zs5A5czC8E6R7k0DMTnjbqt7cuYm+mvcGf/Ss7hXB5TXB1i3+9b/ElDU9xTBUBShU7rvbqazdb2PpbACamCIZv+k8fMghCmG04J0YkUEd08oENN5Fc3yOLipugjm+DDlrjFPcBhpT0UEzzD0bPIFGksuz+Qm5Qcqyw+esG7fzCOeYkSzko1E/9wbU1hRg8HWZILRwKfLBxnacWTn85iMJW9wa0WrrusCyqlGW7oJRRvTC4HZZkQjAGZS71F7ztdyVMk+/3NlEWpM3Nw3FaewJ9LswG9+wvbYLxKxDxls07OANxWP4kH0M8OpFVyulP5GtATeOF/qRFYz0ZV6ChmE01Rfb8LIYWCgKUd/ryme2EiggrU04uXsUt2gKFCqCHmoe1FTSKXRx9wIejBSqS4Wo6J680pGzDsznuVY5kFvuPdYZfpDAtauuJ1lz3kEaYADIglpzu9YtpZ94vLyY1mbONxJ0OUEvZz26aLuAIHGEDC9vFOiyuCulVMGKDTGelrLWHQC+UAC/Jy8o3DLs23uaTJKkS8tp4aaBlQ5J6NZtEGeksjbCyEluzsvGvIvyYmrzrv9MKDqgFMEgwPVs54df+rFQ=
+
+script:
+- cd examples
+- git init
+- git remote add origin https://xing-zhi:${GH_TOKEN}@${GH_REF}
+- git add .
+- git commit -m 'Update examples'
+- git push -u -f origin master:gh-pages
