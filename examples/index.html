@@ -37,7 +37,7 @@ input {
     </section>
 
     <section class="example-container" id="example3">
-      <h2>example2: filter</h2>
+      <h2>example3: filter</h2>
       <div v-search-and-highlight="{ keyword, filter: directiveFilter }">
         <p>keyword: example3</p>
         <p class="not-sah">filter out readonly element example3</p>
@@ -47,8 +47,19 @@ input {
       </div>
     </section>
 
+    <section class="example-container" id="example4">
+      <h2>example4: filter</h2>
+      <div v-search-and-highlight="{ keyword, filter: 'not-sah' }">
+        <p>keyword: example4</p>
+        <p class="not-sah">filter out readonly element example4</p>
+        <input v-model="example4" placeholder="input the keyword 'example4'">
+        <p v-text="example4"></p>
+        <p class="not-sah">filter out data binding element, and it can use mustache syntax: {{ example4 }}</p>
+      </div>
+    </section>
+
     <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/v-search-and-highlight@1.0.0/dist/v-search-and-highlight.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/v-search-and-highlight@1.1.0/dist/v-search-and-highlight.js"></script>
     <script>
 Vue.use(VSearchAndHighlight);
 var example1 = new Vue({
@@ -82,6 +93,16 @@ var example3 = new Vue({
     directiveFilter(el) {
       return !(el.classList && el.classList.contains('not-sah'))
     }
+  }
+});
+
+var example4 = new Vue({
+  el: '#example4',
+  data() {
+    return {
+      keyword: 'example4',
+      example4: ''
+    };
   }
 });
     </script>
