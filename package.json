@@ -1,6 +1,6 @@
 {
   "name": "v-search-and-highlight",
-  "version": "1.0.0",
+  "version": "1.1.0",
   "description": "A Vue plugin for searching the content of an element and highlighting the keyword with the mark element.",
   "main": "dist/v-search-and-highlight.common.js",
   "module": "dist/v-search-and-highlight.es.js",
