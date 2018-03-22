@@ -1,0 +1,110 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Examples for the v-search-and-highlight vue plugin</title>
+    <style>
+.example-container {
+    margin-bottom: 40px;
+}
+input {
+    padding: 5px;
+    width: 400px;
+    border-radius: 3px;
+    border: 1px solid #aaa;
+}
+    </style>
+  </head>
+  <body>
+    <h1>search and highlight examples</h1>
+
+    <section class="example-container" id="example1">
+      <h2>example1: readonly text and no filter</h2>
+      <div v-search-and-highlight="{ keyword }">
+        <p>keyword: example1</p>
+        <p>example1</p>
+      </div>
+    </section>
+
+    <section class="example-container" id="example2">
+      <h2>example2: data binding and no filter</h2>
+      <div v-search-and-highlight="{ keyword }">
+        <p>keyword: example2</p>
+        <input v-model="example2" placeholder="input the keyword 'example2'">
+        <p>data binding with mustache syntax does not work: {{ example2 }}</p>
+        <p>data binding has to use v-text directive: <span v-text="example2"></span></p>
+      </div>
+    </section>
+
+    <section class="example-container" id="example3">
+      <h2>example3: filter</h2>
+      <div v-search-and-highlight="{ keyword, filter: directiveFilter }">
+        <p>keyword: example3</p>
+        <p class="not-sah">filter out readonly element example3</p>
+        <input v-model="example3" placeholder="input the keyword 'example3'">
+        <p v-text="example3"></p>
+        <p class="not-sah">filter out data binding element, and it can use mustache syntax: {{ example3 }}</p>
+      </div>
+    </section>
+
+    <section class="example-container" id="example4">
+      <h2>example4: filter</h2>
+      <div v-search-and-highlight="{ keyword, filter: 'not-sah' }">
+        <p>keyword: example4</p>
+        <p class="not-sah">filter out readonly element example4</p>
+        <input v-model="example4" placeholder="input the keyword 'example4'">
+        <p v-text="example4"></p>
+        <p class="not-sah">filter out data binding element, and it can use mustache syntax: {{ example4 }}</p>
+      </div>
+    </section>
+
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/v-search-and-highlight@1.1.0/dist/v-search-and-highlight.js"></script>
+    <script>
+Vue.use(VSearchAndHighlight);
+var example1 = new Vue({
+  el: '#example1',
+  data() {
+    return {
+      keyword: 'example1'
+    };
+  }
+});
+
+var example2 = new Vue({
+  el: '#example2',
+  data() {
+    return {
+      keyword: 'example2',
+      example2: ''
+    };
+  }
+});
+
+var example3 = new Vue({
+  el: '#example3',
+  data() {
+    return {
+      keyword: 'example3',
+      example3: ''
+    };
+  },
+  methods: {
+    directiveFilter(el) {
+      return !(el.classList && el.classList.contains('not-sah'))
+    }
+  }
+});
+
+var example4 = new Vue({
+  el: '#example4',
+  data() {
+    return {
+      keyword: 'example4',
+      example4: ''
+    };
+  }
+});
+    </script>
+  </body>
+</html>
